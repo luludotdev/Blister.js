@@ -21,12 +21,23 @@
     "serialize",
     "deserialize"
   ],
+  "scripts": {
+    "prepublishOnly": "yarn run test && yarn run build",
+    "test": "yarn run check && yarn run lint",
+    "check": "yarn run build --noEmit",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "prebuild": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "yarn run watch  --sourceMap"
+  },
   "author": "Jack Baron <jackmbaron@gmail.com> (https://www.jackbaron.com)",
   "repository": "git@github.com:lolPants/Blister.js.git",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.7.4",
     "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
