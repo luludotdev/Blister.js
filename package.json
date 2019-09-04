@@ -3,8 +3,26 @@
   "version": "0.1.0",
   "description": "Beat Saber playlist handling Library, now with more JavaScript",
   "main": "lib/index.js",
-  "repository": "git@github.com:lolPants/Blister.js.git",
+  "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "beat",
+    "saber",
+    "vr",
+    "playlist",
+    "serialize",
+    "deserialize"
+  ],
   "author": "Jack Baron <jackmbaron@gmail.com> (https://www.jackbaron.com)",
+  "repository": "git@github.com:lolPants/Blister.js.git",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.7.4",
