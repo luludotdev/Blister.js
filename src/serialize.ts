@@ -3,6 +3,7 @@ import { gunzipSync, gzipSync } from 'zlib'
 import { convertBsonBinary } from './binary'
 import { ERR_INVALID_BUFFER, ERR_INVALID_PLAYLIST } from './errors'
 import { gunzip, gzip } from './gzip'
+import { magicNumber, validateMagicNumber } from './magic'
 import { IPlaylist } from './spec'
 import { validate } from './validate'
 
@@ -17,7 +18,8 @@ export const serialize: (
   if (!valid) throw ERR_INVALID_PLAYLIST
 
   const serialized = bson.serialize(playlist)
-  return gzip(serialized)
+  const gzipped = await gzip(serialized)
+  return Buffer.concat([magicNumber, gzipped])
 }
 
 /**
@@ -29,7 +31,8 @@ export const serializeSync: (playlist: IPlaylist) => Buffer = playlist => {
   if (!valid) throw ERR_INVALID_PLAYLIST
 
   const serialized = bson.serialize(playlist)
-  return gzipSync(serialized)
+  const gzipped = gzipSync(serialized)
+  return Buffer.concat([magicNumber, gzipped])
 }
 
 /**
@@ -40,7 +43,9 @@ export const deserialize: (
   buffer: Buffer
 ) => Promise<IPlaylist> = async buffer => {
   if (!Buffer.isBuffer(buffer)) throw ERR_INVALID_BUFFER
-  const decomp = await gunzip(buffer)
+
+  const bytes = validateMagicNumber(buffer)
+  const decomp = await gunzip(bytes)
   const playlist: IPlaylist = bson.deserialize(decomp)
 
   const valid = validate(playlist)
@@ -55,7 +60,9 @@ export const deserialize: (
  */
 export const deserializeSync: (buffer: Buffer) => IPlaylist = buffer => {
   if (!Buffer.isBuffer(buffer)) throw ERR_INVALID_BUFFER
-  const decomp = gunzipSync(buffer)
+
+  const bytes = validateMagicNumber(buffer)
+  const decomp = gunzipSync(bytes)
   const playlist: IPlaylist = bson.deserialize(decomp)
 
   const valid = validate(playlist)
