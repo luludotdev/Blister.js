@@ -2,6 +2,8 @@ export const ERR_INVALID_PLAYLIST = new Error('invalid playlist')
 export const ERR_INVALID_BASE64 = new Error('invalid base64 string')
 export const ERR_INVALID_BUFFER = new Error('invalid buffer')
 
+export const ERR_INVALID_MAGIC_NUMBER = new Error('invalid magic number')
+
 export const ERR_UNKNOWN_LEGACY_MAP = new Error('unknown legacy map type')
 
 export const ERR_UNKNOWN_MAP_TYPE = new Error('unknown map type')
