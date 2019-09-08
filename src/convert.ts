@@ -10,6 +10,10 @@ import {
   IPlaylist,
 } from './spec'
 
+/**
+ * Convert legacy (v1) Playlists to v2 Format
+ * @param legacy Legacy playlist object
+ */
 export const convertLegacyPlaylist: (
   legacy: ILegacyPlaylist
 ) => IPlaylist = legacy => {

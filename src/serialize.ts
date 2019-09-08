@@ -6,6 +6,10 @@ import { gunzip, gzip } from './gzip'
 import { IPlaylist } from './spec'
 import { validate } from './validate'
 
+/**
+ * Serialize a playlist object to a Blister file
+ * @param playlist Playlist object
+ */
 export const serialize: (
   playlist: IPlaylist
 ) => Promise<Buffer> = async playlist => {
@@ -16,6 +20,10 @@ export const serialize: (
   return gzip(serialized)
 }
 
+/**
+ * Synchronously Serialize a playlist object to a Blister file
+ * @param playlist Playlist object
+ */
 export const serializeSync: (playlist: IPlaylist) => Buffer = playlist => {
   const valid = validate(playlist)
   if (!valid) throw ERR_INVALID_PLAYLIST
@@ -24,6 +32,10 @@ export const serializeSync: (playlist: IPlaylist) => Buffer = playlist => {
   return gzipSync(serialized)
 }
 
+/**
+ * Deserialize a Blister file buffer to a Playlist object
+ * @param buffer Blister file buffer
+ */
 export const deserialize: (
   buffer: Buffer
 ) => Promise<IPlaylist> = async buffer => {
@@ -37,6 +49,10 @@ export const deserialize: (
   return convertBsonBinary(playlist)
 }
 
+/**
+ * Synchronously deserialize a Blister file buffer to a Playlist object
+ * @param buffer Blister file buffer
+ */
 export const deserializeSync: (buffer: Buffer) => IPlaylist = buffer => {
   if (!Buffer.isBuffer(buffer)) throw ERR_INVALID_BUFFER
   const decomp = gunzipSync(buffer)
