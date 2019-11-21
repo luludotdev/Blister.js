@@ -7,23 +7,32 @@ export interface IPlaylist {
   maps: IBeatmap[]
 }
 
+export const enum BeatmapType {
+  Key = 0,
+  Hash = 1,
+  Zip = 2,
+  LevelID = 3,
+}
+
 export interface IKeyBeatmap {
-  type: 'key'
-  key: string
+  type: BeatmapType.Key
+  key: number
+  hex: () => string
 }
 
 export interface IHashBeatmap {
-  type: 'hash'
-  hash: string
+  type: BeatmapType.Hash
+  hash: Buffer
+  hex: () => string
 }
 
 export interface IZipBeatmap {
-  type: 'zip'
+  type: BeatmapType.Zip
   bytes: Buffer
 }
 
 export interface ILevelIDBeatmap {
-  type: 'levelID'
+  type: BeatmapType.LevelID
   levelID: string
 }
 

@@ -5,6 +5,7 @@ import { ERR_INVALID_BUFFER, ERR_INVALID_PLAYLIST } from './errors'
 import { gunzip, gzip } from './gzip'
 import { magicNumber, validateMagicNumber } from './magic'
 import { IPlaylist } from './spec'
+import { decoratePlaylist } from './types'
 import { validate } from './validate'
 
 /**
@@ -51,7 +52,7 @@ export const deserialize: (
   const valid = validate(playlist)
   if (!valid) throw ERR_INVALID_PLAYLIST
 
-  return convertBsonBinary(playlist)
+  return convertBsonBinary(decoratePlaylist(playlist))
 }
 
 /**
@@ -68,5 +69,5 @@ export const deserializeSync: (buffer: Buffer) => IPlaylist = buffer => {
   const valid = validate(playlist)
   if (!valid) throw ERR_INVALID_PLAYLIST
 
-  return convertBsonBinary(playlist)
+  return convertBsonBinary(decoratePlaylist(playlist))
 }

@@ -9,6 +9,7 @@ import {
   IKeyBeatmap,
   IPlaylist,
 } from './spec'
+import { createHashBeatmap, createKeyBeatmap } from './types'
 
 /**
  * Convert legacy (v1) Playlists to v2 Format
@@ -39,10 +40,9 @@ const convertLegacySong: (song: ILegacyBeatmap) => IBeatmap = song => {
   }
 
   if (song.hash) {
-    const map: IHashBeatmap = {
-      hash: song.hash.toLowerCase(),
-      type: 'hash',
-    }
+    const map: IHashBeatmap = createHashBeatmap(
+      Buffer.from(song.hash.toLowerCase(), 'hex')
+    )
 
     return { ...common, ...map }
   }
@@ -51,11 +51,7 @@ const convertLegacySong: (song: ILegacyBeatmap) => IBeatmap = song => {
     const key = parseKey(song.key)
     if (!key) throw ERR_INVALID_BEATSAVER_KEY(song.key)
 
-    const map: IKeyBeatmap = {
-      key,
-      type: 'key',
-    }
-
+    const map: IKeyBeatmap = createKeyBeatmap(parseInt(key, 16))
     return { ...common, ...map }
   }
 

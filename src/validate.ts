@@ -1,18 +1,18 @@
 import { Binary } from 'bson'
 import { keyRX } from './beatsaverKey'
 import {
-  ERR_INVALID_MAP_BYTES,
   ERR_INVALID_MAP_DATE,
-  ERR_INVALID_MAP_HASH,
   ERR_INVALID_MAP_KEY,
   ERR_INVALID_MAP_TYPE,
   ERR_UNKNOWN_MAP_TYPE,
 } from './errors'
 import {
+  BeatmapType,
   IBeatmap,
   ICommonBeatmap,
   IHashBeatmap,
   IKeyBeatmap,
+  ILevelIDBeatmap,
   IPlaylist,
   IZipBeatmap,
 } from './spec'
@@ -32,9 +32,10 @@ export const validate: (playlist: IPlaylist) => boolean = playlist => {
   if (!isBinary(playlist.cover)) return false
 
   for (const map of playlist.maps) {
-    if (map.type === 'key') validateKeyMap(map)
-    else if (map.type === 'hash') validateHashMap(map)
-    else if (map.type === 'zip') validateZipMap(map)
+    if (map.type === BeatmapType.Key) validateKeyMap(map)
+    else if (map.type === BeatmapType.Hash) validateHashMap(map)
+    else if (map.type === BeatmapType.Zip) validateZipMap(map)
+    else if (map.type === BeatmapType.LevelID) validateLevelIdMap(map)
     else throw ERR_UNKNOWN_MAP_TYPE
   }
 
@@ -42,7 +43,7 @@ export const validate: (playlist: IPlaylist) => boolean = playlist => {
 }
 
 const validateCommonMap: (map: IBeatmap) => void = map => {
-  if (typeof map.type !== 'string') throw ERR_INVALID_MAP_TYPE
+  if (typeof map.type !== 'number') throw ERR_INVALID_MAP_TYPE
   if (!(map.dateAdded instanceof Date)) throw ERR_INVALID_MAP_DATE
 }
 
@@ -60,6 +61,12 @@ const validateHashMap: (map: ICommonBeatmap & IHashBeatmap) => void = map => {
 }
 
 const validateZipMap: (map: ICommonBeatmap & IZipBeatmap) => void = map => {
+  validateCommonMap(map)
+}
+
+const validateLevelIdMap: (
+  map: ICommonBeatmap & ILevelIDBeatmap
+) => void = map => {
   validateCommonMap(map)
 }
 

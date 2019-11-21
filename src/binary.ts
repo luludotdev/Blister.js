@@ -1,6 +1,6 @@
 import { Binary } from 'bson'
 import { ERR_INVALID_BASE64 } from './errors'
-import { IPlaylist } from './spec'
+import { BeatmapType, IPlaylist } from './spec'
 
 const b64RX = /^.+base64,(.+)$/
 
@@ -19,8 +19,9 @@ export const convertBsonBinary: (
   }
 
   for (const map of playlist.maps) {
-    if (map.type !== 'zip') continue
-    if (map.bytes instanceof Binary) {
+    if (map.type === BeatmapType.Hash && map.hash instanceof Binary) {
+      map.hash = map.hash.buffer
+    } else if (map.type === BeatmapType.Zip && map.bytes instanceof Binary) {
       map.bytes = map.bytes.buffer
     }
   }
