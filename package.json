@@ -2,13 +2,13 @@
   "name": "blister.js",
   "version": "0.4.0",
   "description": "Beat Saber playlist handling Library, now with more JavaScript",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false,
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "esm/**/*"
   ],
   "engines": {
     "node": ">=8.0.0"
@@ -26,9 +26,12 @@
     "test": "yarn run check && yarn run lint",
     "check": "yarn run build --noEmit",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "prebuild": "rimraf lib",
-    "build": "tsc",
-    "watch": "tsc --watch",
+    "prebuild": "rimraf lib esm",
+    "build:cjs": "ncc build ./src/index.ts -o lib -m",
+    "build:esm": "yarn run compile --module ES6 --outDir esm",
+    "build": "yarn run build:cjs && yarn run build:esm",
+    "compile": "tsc",
+    "watch": "yarn run compile --watch",
     "dev": "yarn run watch  --sourceMap"
   },
   "author": "Jack Baron <jackmbaron@gmail.com> (https://www.jackbaron.com)",
@@ -37,6 +40,7 @@
   "devDependencies": {
     "@types/bson": "^4.0.1",
     "@types/node": "^12.12.11",
+    "@zeit/ncc": "^0.20.5",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "tslint": "^5.20.1",

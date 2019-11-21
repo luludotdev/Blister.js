@@ -44,6 +44,7 @@ docs
 
 # Compiled TypeScript
 lib/
+esm/
 
 # Playlist files
 *.bplist
