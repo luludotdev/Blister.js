@@ -12,14 +12,18 @@ export const createKeyBeatmap: (key: number) => IKeyBeatmap = key => ({
   key,
   type: BeatmapType.Key,
 
-  keyHex: () => key.toString(16),
+  get keyHex() {
+    return key.toString(16)
+  },
 })
 
 export const createHashBeatmap: (hash: Buffer) => IHashBeatmap = hash => ({
   hash,
   type: BeatmapType.Hash,
 
-  hashHex: () => hash.toString('hex').toLowerCase(),
+  get hashHex() {
+    return hash.toString('hex').toLowerCase()
+  },
 })
 
 export const decoratePlaylist: (
@@ -27,9 +31,17 @@ export const decoratePlaylist: (
 ) => IPlaylist = playlist => {
   for (const map of playlist.maps) {
     if (map.type === BeatmapType.Key) {
-      map.keyHex = () => map.key.toString(16)
+      Object.defineProperty(map, 'keyHex', {
+        get() {
+          return map.key.toString(16)
+        },
+      })
     } else if (map.type === BeatmapType.Hash) {
-      map.hashHex = () => map.hash.toString('hex').toLowerCase()
+      Object.defineProperty(map, 'hashHex', {
+        get() {
+          return map.hash.toString('hex').toLowerCase()
+        },
+      })
     }
   }
 
