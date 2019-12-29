@@ -15,11 +15,13 @@ export const ERR_INVALID_LEGACY_COVER_IMAGE = new Error(
   'invalid legacy cover image'
 )
 
+export const ERR_INVALID_MAP_BYTES = new Error('invalid map bytes')
 export const ERR_INVALID_MAP_KEY = (key: string | number) =>
   new Error(`invalid map key: \`${key}\``)
-export const ERR_INVALID_MAP_HASH = (key: string | number) =>
-  new Error(`invalid map hash: \`${key}\``)
-export const ERR_INVALID_MAP_BYTES = new Error('invalid map bytes')
+export const ERR_INVALID_MAP_HASH = (hash: string | Buffer) => {
+  const hex = hash instanceof Buffer ? hash.toString('hex') : hash
+  return new Error(`invalid map hash: \`${hex}\``)
+}
 
 export const ERR_INVALID_BEATSAVER_KEY = (key: string | number) =>
   new Error(`invalid beatsaver key: \`${key}\``)
