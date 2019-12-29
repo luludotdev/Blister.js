@@ -14,7 +14,8 @@
     "downlevelIteration": true,
     "outDir": "./lib",
     "rootDir": "./src",
-    "declaration": true
+    "declaration": true,
+    "preserveConstEnums": true
   },
   "include": [
     "src/**/*.ts"
