@@ -1,4 +1,12 @@
-import { BeatmapType, IHashBeatmap, IKeyBeatmap, IPlaylist } from './spec'
+import {
+  BeatmapType,
+  IBeatmap,
+  IHashBeatmap,
+  IKeyBeatmap,
+  ILevelIDBeatmap,
+  IPlaylist,
+  IZipBeatmap,
+} from './spec'
 
 export const createKeyBeatmap: (key: number) => IKeyBeatmap = key => ({
   key,
@@ -27,3 +35,19 @@ export const decoratePlaylist: (
 
   return playlist
 }
+
+// @ts-ignore
+export const mapIsKey: (map: IBeatmap) => map is IKeyBeatmap = map =>
+  map.type === BeatmapType.Key
+
+// @ts-ignore
+export const mapIsHash: (map: IBeatmap) => map is IHashBeatmap = map =>
+  map.type === BeatmapType.Hash
+
+// @ts-ignore
+export const mapIsZip: (map: IBeatmap) => map is IZipBeatmap = map =>
+  map.type === BeatmapType.Zip
+
+// @ts-ignore
+export const mapIsLevelID: (map: IBeatmap) => map is ILevelIDBeatmap = map =>
+  map.type === BeatmapType.LevelID
