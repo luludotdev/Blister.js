@@ -55,5 +55,14 @@ const convertLegacySong: (song: ILegacyBeatmap) => IBeatmap = song => {
     return { ...common, ...map }
   }
 
+  if (song.levelId) {
+    const map: ILevelIDBeatmap = {
+      levelID: song.levelId,
+      type: BeatmapType.LevelID,
+    }
+
+    return { ...common, ...map }
+  }
+
   throw ERR_UNKNOWN_LEGACY_MAP
 }
