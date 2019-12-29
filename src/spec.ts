@@ -3,7 +3,7 @@ export interface IPlaylist {
   author: string
   description: string | null
 
-  cover: Buffer
+  cover: Buffer | null
   maps: IBeatmap[]
 }
 
