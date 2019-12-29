@@ -24,7 +24,7 @@
   "scripts": {
     "prepublishOnly": "yarn run test && yarn run build",
     "test": "yarn run check && yarn run lint",
-    "check": "yarn run build --noEmit",
+    "check": "yarn run compile --noEmit",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prebuild": "rimraf lib esm",
     "build:cjs": "ncc build ./src/index.ts -o lib -m -e file-type -e bson -e bson-ext",
