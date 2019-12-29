@@ -17,13 +17,13 @@ export const enum BeatmapType {
 export interface IKeyBeatmap {
   type: BeatmapType.Key
   key: number
-  hex: () => string
+  keyHex: () => string
 }
 
 export interface IHashBeatmap {
   type: BeatmapType.Hash
   hash: Buffer
-  hex: () => string
+  hashHex: () => string
 }
 
 export interface IZipBeatmap {
