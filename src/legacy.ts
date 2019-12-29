@@ -3,7 +3,7 @@ export interface ILegacyPlaylist {
   playlistAuthor: string
   playlistDescription?: string
 
-  image: string
+  image: string | null | undefined
   songs: ILegacyBeatmap[]
 }
 

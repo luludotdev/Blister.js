@@ -10,6 +10,11 @@ export const ERR_UNKNOWN_MAP_TYPE = new Error('unknown map type')
 export const ERR_INVALID_MAP_TYPE = new Error('invalid map type')
 export const ERR_INVALID_MAP_DATE = new Error('invalid map dateAdded')
 
+export const ERR_INVALID_COVER_FILE_TYPE = new Error('invalid cover file type')
+export const ERR_INVALID_LEGACY_COVER_IMAGE = new Error(
+  'invalid legacy cover image'
+)
+
 export const ERR_INVALID_MAP_KEY = (key: string | number) =>
   new Error(`invalid map key: \`${key}\``)
 export const ERR_INVALID_MAP_HASH = (key: string | number) =>
