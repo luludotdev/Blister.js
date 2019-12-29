@@ -1,5 +1,4 @@
 import { gunzipSync, gzipSync } from 'zlib'
-import { convertBsonBinary } from './binary'
 import * as bson from './bson'
 import { ERR_INVALID_BUFFER, ERR_INVALID_PLAYLIST } from './errors'
 import { gunzip, gzip } from './gzip'
@@ -47,12 +46,12 @@ export const deserialize: (
 
   const bytes = validateMagicNumber(buffer)
   const decomp = await gunzip(bytes)
-  const playlist = bson.deserialize<IPlaylist>(decomp)
+  const playlist = bson.deserialize<IPlaylist>(decomp, { promoteBuffers: true })
 
   const valid = validate(playlist)
   if (!valid) throw ERR_INVALID_PLAYLIST
 
-  return convertBsonBinary(decoratePlaylist(playlist))
+  return decoratePlaylist(playlist)
 }
 
 /**
@@ -64,10 +63,10 @@ export const deserializeSync: (buffer: Buffer) => IPlaylist = buffer => {
 
   const bytes = validateMagicNumber(buffer)
   const decomp = gunzipSync(bytes)
-  const playlist = bson.deserialize<IPlaylist>(decomp)
+  const playlist = bson.deserialize<IPlaylist>(decomp, { promoteBuffers: true })
 
   const valid = validate(playlist)
   if (!valid) throw ERR_INVALID_PLAYLIST
 
-  return convertBsonBinary(decoratePlaylist(playlist))
+  return decoratePlaylist(playlist)
 }
