@@ -33,7 +33,7 @@ interface IConvertOptions {
 export const convertLegacyPlaylist: (
   legacy: ILegacyPlaylist,
   options?: IConvertOptions
-) => IPlaylist = (legacy, options) => {
+) => Promise<IPlaylist> = async (legacy, options) => {
   const playlist: IPlaylist = {
     author: legacy.playlistAuthor,
     description: legacy.playlistDescription || null,
@@ -53,7 +53,7 @@ export const convertLegacyPlaylist: (
   if (legacy.image) {
     try {
       const cover = b64ToBuffer(legacy.image)
-      const type = fileType(cover)?.mime
+      const type = (await fileType.fromBuffer(cover))?.mime
       if (type !== 'image/png' && type !== 'image/jpeg') {
         throw ERR_INVALID_COVER_FILE_TYPE
       }
