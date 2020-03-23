@@ -38,19 +38,19 @@
   "repository": "git@github.com:lolPants/Blister.js.git",
   "license": "MIT",
   "devDependencies": {
-    "@types/bson": "^4.0.1",
-    "@types/node": "^12.12.11",
-    "@zeit/ncc": "^0.20.5",
-    "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
+    "@types/bson": "^4.0.2",
+    "@types/node": "^13.9.3",
+    "@zeit/ncc": "^0.21.1",
+    "prettier": "^2.0.1",
+    "rimraf": "^3.0.2",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.7.2"
+    "tslint-plugin-prettier": "^2.2.0",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "bson": "^4.0.2",
-    "file-type": "^12.4.2"
+    "bson": "^4.0.3",
+    "file-type": "^14.1.4"
   },
   "optionalPeerDependencies": {
     "bson-ext": "^2.0.3"
